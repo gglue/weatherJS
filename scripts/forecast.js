@@ -1,4 +1,4 @@
-const key = 'test';
+const key = '0cbUzkkvqqdhQVxVPdhTNzttS2syKXsk';
 
 // This function helps get the city information
 const getCity = async (city) => {
@@ -14,10 +14,8 @@ const getCity = async (city) => {
 const getWeather = async (cityID) => {
     const base = 'http://dataservice.accuweather.com/currentconditions/v1/';
     const query = `${cityID}?apikey=${key}`;
-    const reponse = await fetch(base + query);
+    const response = await fetch(base + query);
     const data = await response.json();
-};
 
-getCity('Toronto')
-.then(data => console.log(data))
-.catch(err => console.log(err));
+    return data[0];
+};
