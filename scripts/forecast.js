@@ -10,7 +10,7 @@ const getCity = async (city) => {
     return data[0];
 };
 
-// This functio nhelps get the weather information based on the city
+// This function helps get the weather information based on the city
 const getWeather = async (cityID) => {
     const base = 'http://dataservice.accuweather.com/currentconditions/v1/';
     const query = `${cityID}?apikey=${key}`;
@@ -19,3 +19,13 @@ const getWeather = async (cityID) => {
 
     return data[0];
 };
+
+// This function helps get the weather information based on the city ahead
+const getTommorowWeather = async (cityID) => {
+    const base = 'http://dataservice.accuweather.com/forecasts/v1/daily/1day/';
+    const query = `${cityID}?apikey=${key}`;
+    const response = await fetch(base + query);
+    const data = await response.json();
+
+    return data;
+}

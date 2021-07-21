@@ -10,3 +10,16 @@ input[type=text], input[type=text]:focus{
     background: rgba(0,0,0,0.2);
 }
 
+.icon{
+  position: relative;
+  top: 150px;
+  border-radius: 50%;
+  right: 200px;
+  width: 100px;
+  margin-bottom: -50px;
+}
+
+.card-img-top{
+  height: 400px;
+  object-fit: cover;
+}
