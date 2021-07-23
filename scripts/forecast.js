@@ -1,31 +1,56 @@
-const key = '0cbUzkkvqqdhQVxVPdhTNzttS2syKXsk';
+class Forecast {
+    constructor(){
+        this.key = '0cbUzkkvqqdhQVxVPdhTNzttS2syKXsk';
+        this.baseCity = 'http://dataservice.accuweather.com/locations/v1/cities/search';
+        this.baseWeather = 'http://dataservice.accuweather.com/currentconditions/v1/';
+        this.baseForecast = 'http://dataservice.accuweather.com/forecasts/v1/daily/1day/';
+    }
 
-// This function helps get the city information
-const getCity = async (city) => {
-    const base = 'http://dataservice.accuweather.com/locations/v1/cities/search';
-    const query = `?apikey=${key}&q=${city}`;
-    const response = await fetch(base + query);
-    const data = await response.json();
+    // This function helps get the city information
+    async getCity(cityID){
+        const query = `?apikey=${this.key}&q=${cityID}`;
+        const response = await fetch(this.baseCity + query);
+        const data = await response.json();
 
-    return data[0];
-};
+        return data[0];
 
-// This function helps get the weather information based on the city
-const getWeather = async (cityID) => {
-    const base = 'http://dataservice.accuweather.com/currentconditions/v1/';
-    const query = `${cityID}?apikey=${key}`;
-    const response = await fetch(base + query);
-    const data = await response.json();
+    }
 
-    return data[0];
-};
+    // This function helps get the weather information based on the city
+    async getWeather(cityID){
+        const query = `${cityID}?apikey=${this.key}`;
+        const response = await fetch(this.baseWeather + query);
+        const data = await response.json();
+    
+        return data[0];
+    }
 
-// This function helps get the weather information based on the city ahead
-const getTommorowWeather = async (cityID) => {
-    const base = 'http://dataservice.accuweather.com/forecasts/v1/daily/1day/';
-    const query = `${cityID}?apikey=${key}`;
-    const response = await fetch(base + query);
-    const data = await response.json();
+    // This function helps get the weather information based on the city ahead
+    async getTommorowWeather(cityID){
+        const query = `${cityID}?apikey=${this.key}`;
+        const response = await fetch(this.baseForecast + query);
+        const data = await response.json();
+    
+        return data;
+    }
 
-    return data;
+    //Updates the info box if asking for today's weather
+    async updateUI(cityID){
+        const details = await this.getCity(cityID);
+        const weather = await this.getWeather(details.Key);
+        return {
+            details: details,
+            weather: weather
+        }
+    }
+
+    //Updates the info box if asking for today's weather
+    async updateUITmmrw(cityID){
+        const details = await this.getCity(cityID);
+        const weather = await this.getTommorowWeather(details.Key);
+        return {
+            details: details,
+            weather: weather
+        }
+    }
 }

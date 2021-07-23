@@ -3,37 +3,24 @@ const box = document.querySelector('.d-none');
 const infoBox = document.querySelector('.card-body');
 const picture = document.querySelector('.card-img-top');
 const weatherIcon = document.querySelector('.icon img');
-
+const forecast = new Forecast();
 searchBar.addEventListener('submit', e => {
     e.preventDefault();
 
     // Trim the input to make sure it's readable
     const city = searchBar.city.value.trim();
+
+    // Add city to storage
+    localStorage.setItem('city', city);
+
     searchBar.reset();
 
     // Use input to update the UI
-    updateUI(city).then(data  => updateInfo(data))
+    forecast.updateUI(city).then(data  => updateInfo(data))
     .catch(err => console.log(err));
 
+
 });
-
-const updateUI = async (city) => {
-    const details = await getCity(city);
-    const weather = await getWeather(details.Key);
-    return {
-        details: details,
-        weather: weather
-    }
-}
-
-const updateUITmmrw = async (city) => {
-    const details = await getCity(city);
-    const weather = await getTommorowWeather(details.Key);
-    return {
-        details: details,
-        weather: weather
-    }
-}
 
 const updateInfo = (cityInfo) => {
     const info = cityInfo.details;
@@ -68,7 +55,7 @@ const updateInfo = (cityInfo) => {
         const city = info.EnglishName;
     
         // Use input to update the UI
-        updateUITmmrw(city).then(data  => updateInfoTmmrw(data))
+        forecast.updateUITmmrw(city).then(data  => updateInfoTmmrw(data))
         .catch(err => console.log(err));
     });
 
@@ -121,7 +108,7 @@ const updateInfoTmmrw = (cityInfo) => {
         const city = info.EnglishName;
     
         // Use input to update the UI
-        updateUI(city).then(data  => updateInfo(data))
+        forecast.updateUI(city).then(data  => updateInfo(data))
         .catch(err => console.log(err));
     });
 
@@ -133,3 +120,9 @@ const updateInfoTmmrw = (cityInfo) => {
     weatherIcon.setAttribute('src', weatherIconSource);
 
 }
+
+// If city already exists in storage, automatically pull up the information for that city
+if(localStorage.getItem('city')){
+    forecast.updateUI(localStorage.getItem('city')).then(data  => updateInfo(data))
+    .catch(err => console.log(err));
+};
