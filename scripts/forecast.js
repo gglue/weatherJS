@@ -1,9 +1,9 @@
 class Forecast {
     constructor(){
         this.key = '0cbUzkkvqqdhQVxVPdhTNzttS2syKXsk';
-        this.baseCity = 'http://dataservice.accuweather.com/locations/v1/cities/search';
-        this.baseWeather = 'http://dataservice.accuweather.com/currentconditions/v1/';
-        this.baseForecast = 'http://dataservice.accuweather.com/forecasts/v1/daily/1day/';
+        this.baseCity = 'https://dataservice.accuweather.com/locations/v1/cities/search';
+        this.baseWeather = 'https://dataservice.accuweather.com/currentconditions/v1/';
+        this.baseForecast = 'https://dataservice.accuweather.com/forecasts/v1/daily/1day/';
     }
 
     // This function helps get the city information
